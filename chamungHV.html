@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Chào mừng hội viên</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .email-container {
+            width: 100%;
+            padding: 20px 0;
+        }
+        .content {
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            position: relative;
+        }
+        .content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://rndwows.github.io/QLBIFA/logo-bifa.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.1; /* Điều chỉnh độ mờ ở đây, 0.1 = 10% opacity */
+            z-index: 0;
+            border-radius: 10px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .header img {
+            width: 100px;
+            height: auto;
+        }
+        .header p {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #B22222;
+            font-size: 1.2em;
+        }
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .info-text {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .info-text p {
+            line-height: 1.6;
+            color: #333;
+        }
+        #logo {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #B22222;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #8B0000;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        function captureContent() {
+            const content = document.querySelector('.content');
+            html2canvas(content, {
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const images = clonedDoc.querySelectorAll('img');
+                    images.forEach(img => img.src = img.src);
+                }
+            }).then(canvas => {
+                const dataUrl = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = 'content.png';
+                link.click();
+            }).catch(err => {
+                console.error('Error capturing content:', err);
+            });
+        }
+
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var name = getUrlParameter('name');
+            var ngaysinh = getUrlParameter('ngaysinh');
+            var que = getUrlParameter('que');
+            var sdt = getUrlParameter('sdt');
+            var chucvu = getUrlParameter('chucvu');
+            var congtys = getUrlParameter('congtys');
+            var data = getUrlParameter('data');
+            var truso = getUrlParameter('truso');
+            var nganhnghe = getUrlParameter('nganhnghe');
+            var linkAnh = getUrlParameter('linkAnh');
+             
+            console.log("Parameters:", {name, ngaysinh, que, sdt, chucvu, congtys, data, truso, nganhnghe, linkAnh});
+            
+            document.getElementById('name').textContent = name;
+            document.getElementById('ngaysinh').textContent = ngaysinh;
+            document.getElementById('que').textContent = que;
+            document.getElementById('sdt').textContent = sdt;
+            document.getElementById('chucvu').textContent = chucvu;
+            document.getElementById('congtys').textContent = congtys;
+            document.getElementById('data').textContent = data;
+            document.getElementById('nganhnghe').textContent = nganhnghe;
+
+            var encodedLinkAnh = encodeURIComponent(linkAnh);
+            var imageUrl = decodeURIComponent(encodedLinkAnh);
+            document.getElementById('logo').src = imageUrl;
+
+            console.log("Image URL:", imageUrl);
+        });
+    </script>
+</head>
+<body>
+    <div class="email-container">
+        <div class="content">
+            <div class="header">
+                <img src="https://rndwows.github.io/QLBIFA/logo-bifa.png" alt="Hội Doanh Nhân ">
+             
+                 <p>HIỆP HỘI CHẾ BIẾN GỖ TỈNH BÌNH DƯƠNG</p>
+                   <p>CHÀO MỪNG</p>
+            </div>
+            <div class="info-container">
+                <div class="info-text">
+                    <p>Hội viên:<b> <span id="name"></span></b></p>
+                    <p>Ngày sinh: <b><span id="ngaysinh"></span></b></p>
+                    <p>Địa chỉ: <b><span id="que"></span></b></p>
+                    <p>Số điện thoại: <span id="sdt"></span> Chức vụ: <span id="chucvu"></span></p>
+                    <p><span id="congtys"></span></p>
+                   
+                </div>
+                <img id="logo" alt="Logo" src="">
+            </div>
+            <div>
+                <p>Nhóm ngành nghề: <span id="nganhnghe"></span></p>
+                <p>⚡ Đã trở thành Hội Viên - HIỆP HỘI CHẾ BIẾN GỖ TỈNH BÌNH DƯƠNG từ ngày:<b> <span id="data"></span></b></p>
+                <p>🌟 Chúc anh chị có những trải nghiệm tuyệt vời cùng Hội.</p>
+            </div>
+            <div class="footer">
+                <p>Văn phòng hội: Số 31, đường Hoàng Hoa Thám, khu phố 8, phường Hiệp Thành, TP TDM, tỉnh Bình Dương</p>
+                <p>Hotline: 0274. 3616. 256</p>
+                <p>Email: info@bifa.vn</p>
+            </div>
+        </div>
+    </div>
+   
+</body>
+</html>
