@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giấy Chứng Nhận BIFA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            font-family: 'Open Sans', sans-serif;
+            padding: 20px;
+        }
+
+        .certificate-container {
+            max-width: 100%;
+            width: 900px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .certificate {
+            width: 100%;
+            position: relative;
+            background: #fff;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IGlkPSJwYXR0ZXJuLWJhY2tncm91bmQiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InRyYW5zcGFyZW50Ij48L3JlY3Q+PHBhdGggZmlsbD0icmdiYSgwLCAxMDAsIDAsIDAuMDIpIiBkPSJNMCAwIGg1MCB2NTAgaC01MCB6Ij48L3BhdGg+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCBmaWxsPSJ1cmwoI3BhdHRlcm4pIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIj48L3JlY3Q+PC9zdmc+');
+            text-align: center;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .certificate::before,
+        .certificate::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .certificate::before {
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, rgba(0, 100, 50, 0.7) 0%, transparent 15%);
+        }
+
+        .certificate::after {
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(315deg, rgba(0, 100, 50, 0.7) 0%, transparent 15%);
+        }
+
+        .header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            width: 180px;
+            margin-right: 20px;
+        }
+
+        .title-container {
+            width: 100%;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            color: #00553d;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        h1.chungnhan {
+            font-size: 30px;
+            color: #d23333;
+            margin: 10px 0 25px 0;
+            position: relative;
+        }
+
+        h1.chungnhan::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, rgba(0, 100, 50, 0.1), rgba(205, 176, 106, 0.8), rgba(0, 100, 50, 0.1));
+            margin: 15px auto 0;
+        }
+
+        .info-container {
+            width: 85%;
+            text-align: left;
+            margin: 0 auto 30px;
+            border-radius: 8px;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(205, 176, 106, 0.3);
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #00553d;
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+            flex-grow: 1;
+        }
+
+        .statement {
+            width: 80%;
+            text-align: center;
+            font-weight: 600;
+            color: #00553d;
+            font-size: 18px;
+            position: relative;
+            padding: 15px 0;
+        }
+
+        .statement::before, 
+        .statement::after {
+            content: '';
+            display: block;
+            width: 180px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(205, 176, 106, 0.8), rgba(255, 255, 255, 0));
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .statement::before {
+            top: 0;
+        }
+
+        .statement::after {
+            bottom: 0;
+        }
+
+        .footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 30px;
+        }
+
+        .date-section {
+            width: 30%;
+            text-align: center;
+        }
+
+        .date-title {
+            font-size: 14px;
+            color: #00553d;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .date-value {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .seal-section {
+            position: relative;
+            width: 30%;
+            text-align: center;
+        }
+
+        .seal {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background-image: url('https://rndwows.github.io/CLB_PICKLEBALL_DNT_BD/chungnhan.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .signature-section {
+            width: 30%;
+            text-align: center;
+        }
+
+        .signature-title {
+            font-size: 14px;
+            color: #00553d;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .signature-subtitle {
+            font-size: 14px;
+            color: #00553d;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .signature-placeholder {
+            width: 100%;
+            height: 60px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .signature-placeholder::after {
+            content: 'BIFA';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(0, 85, 61, 0.1);
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        #capture-btn {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #00553d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #capture-btn:hover {
+            background-color: #003c2a;
+        }
+
+        @media (max-width: 768px) {
+            .certificate {
+                padding: 20px;
+            }
+
+            .info-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            h1.chungnhan {
+                font-size: 24px;
+            }
+
+            .footer {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .date-section, .seal-section, .signature-section {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificate-container">
+        <div class="certificate" id="certificate">
+            <div class="header">
+                <img src="https://rndwows.github.io/QLBIFA/logo-bifa.png" alt="BIFA Logo" class="logo">
+                <h1>HIỆP HỘI CHẾ BIẾN GỖ TỈNH BÌNH DƯƠNG</h1>
+            </div>
+
+            <div class="title-container">
+                <h1 class="chungnhan">CHỨNG NHẬN</h1>
+            </div>
+
+            <div class="info-container">
+                <div class="info-row">
+                    <div class="info-label">Hội viên:</div>
+                    <div class="info-value" id="name"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Đơn vị:</div>
+                    <div class="info-value" id="cty"></div>
+                </div>
+            </div>
+
+            <div class="statement">
+                Là hội viên của HIỆP HỘI CHẾ BIẾN GỖ TỈNH BÌNH DƯƠNG
+            </div>
+
+            <div class="footer">
+                <div class="date-section">
+                    <div class="date-title">NGÀY THAM GIA</div>
+                    <div class="date-value" id="ngay"></div>
+                </div>
+                <div class="seal-section">
+                    <div class="seal"></div>
+                </div>
+                <div class="signature-section">
+                    <div class="signature-title">HIỆP HỘI CHẾ BIẾN GỖ</div>
+                    <div class="signature-subtitle">CHỦ TỊCH</div>
+                    <div class="signature-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="capture-btn">Chụp chứng nhận</button>
+
+    <script>
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Get parameters from URL
+        var name = getUrlParameter('name');
+        document.getElementById('name').textContent = name || '';
+        
+        var cty = getUrlParameter('cty');
+        document.getElementById('cty').textContent = cty || '';
+        
+        var ngay = getUrlParameter('ngay');
+        document.getElementById('ngay').textContent = ngay || '';
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('capture-btn').addEventListener('click', function () {
+            const captureBtn = document.getElementById('capture-btn');
+            captureBtn.style.display = 'none'; // Hide the button during capture
+            
+            html2canvas(document.getElementById('certificate'), {
+                scale: 2, // Increase quality
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            }).then(function (canvas) {
+                // Create an <a> element for downloading the image
+                let link = document.createElement('a');
+                let fileName = document.getElementById('name').textContent;
+                link.download = (fileName || 'chungnhan') + '.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                captureBtn.style.display = 'block'; // Show the button again
+            });
+        });
+    </script>
+</body>
+
+</html>
