@@ -201,7 +201,7 @@
                             <label for="hometown" class="block text-sm font-medium text-gray-700">Nguyên Quán</label>
                             <select id="hometown" name="hometown"
                                 class="mt-2 w-full border gradient-border rounded-lg p-3 focus:ring-green-500 focus:border-green-500">
-                                <!-- Options will be populated by JavaScript -->
+                                <option value="" selected disabled>Chọn tỉnh/thành phố</option>
                             </select>
                         </div>
                         <!-- New fields for personal information -->
@@ -351,6 +351,7 @@
         // Initialize Choices.js instances
         let industryGroupChoices;
         let businessFieldChoices;
+        let hometownChoices;
 
         // API request function using Fetch API instead of jQuery Ajax
         async function apiRequest(tableName, action, data) {
@@ -430,17 +431,19 @@
             }
         }
 
-        // Hàm để tạo dropdown cho tỉnh thành
-        async function populateProvinceDropdown() {
-            const hometownSelect = document.getElementById('hometown');
+        // Hàm để khởi tạo Choices.js cho dropdown tỉnh thành
+        async function initHometownChoices() {
             const provinces = await fetchProvinces();
+            const hometownSelect = document.getElementById('hometown');
+
+            // Xóa tất cả options hiện tại
+            hometownSelect.innerHTML = '';
 
             // Thêm option mặc định
             const defaultOption = document.createElement('option');
             defaultOption.value = "";
             defaultOption.textContent = "Chọn tỉnh/thành phố";
             defaultOption.selected = true;
-            defaultOption.disabled = true;
             hometownSelect.appendChild(defaultOption);
 
             // Thêm các tỉnh thành vào dropdown
@@ -449,6 +452,43 @@
                 option.value = province.name;
                 option.textContent = province.name;
                 hometownSelect.appendChild(option);
+            });
+
+            // Khởi tạo Choices.js cho dropdown
+            hometownChoices = new Choices('#hometown', {
+                searchEnabled: true,
+                searchPlaceholderValue: 'Tìm kiếm tỉnh/thành phố...',
+                itemSelectText: 'Nhấn để chọn',
+                noResultsText: 'Không tìm thấy kết quả phù hợp',
+                shouldSort: false,
+                classNames: {
+                    containerOuter: 'choices',
+                    containerInner: 'choices__inner',
+                    input: 'choices__input',
+                    inputCloned: 'choices__input--cloned',
+                    list: 'choices__list',
+                    listItems: 'choices__list--multiple',
+                    listSingle: 'choices__list--single',
+                    listDropdown: 'choices__list--dropdown',
+                    item: 'choices__item',
+                    itemSelectable: 'choices__item--selectable',
+                    itemDisabled: 'choices__item--disabled',
+                    itemChoice: 'choices__item--choice',
+                    placeholder: 'choices__placeholder',
+                    group: 'choices__group',
+                    groupHeading: 'choices__heading',
+                    button: 'choices__button',
+                    activeState: 'is-active',
+                    focusState: 'is-focused',
+                    openState: 'is-open',
+                    disabledState: 'is-disabled',
+                    highlightedState: 'is-highlighted',
+                    selectedState: 'is-selected',
+                    flippedState: 'is-flipped',
+                    loadingState: 'is-loading',
+                    noResults: 'has-no-results',
+                    noChoices: 'has-no-choices'
+                }
             });
         }
 
@@ -802,6 +842,9 @@
                     noChoices: 'has-no-choices'
                 }
             });
+
+            // Khởi tạo Choices.js cho hometown
+            initHometownChoices();
         }
 
         // Get values from Choices.js selections
@@ -810,6 +853,15 @@
                 return choicesInstance.getValue()
                     .map(item => item.value)
                     .join(', ');
+            }
+            return '';
+        }
+
+        // Get value from single choice selection
+        function getChoiceValue(choicesInstance) {
+            if (choicesInstance) {
+                const value = choicesInstance.getValue();
+                return value ? (typeof value === 'object' ? value.value : value) : '';
             }
             return '';
         }
@@ -824,7 +876,6 @@
                 const email = document.getElementById('email').value.trim();
                 const phone = document.getElementById('phone').value.trim();
                 const birthday = document.getElementById('birthday').value;
-                const hometown = document.getElementById('hometown').value.trim();
                 const company_name = document.getElementById('company_name').value.trim();
                 const position = document.getElementById('position').value.trim();
                 const company_address = document.getElementById('company_address').value.trim();
@@ -840,6 +891,7 @@
                 // Lấy giá trị từ Choices.js
                 const industry_group = getChoicesValues(industryGroupChoices);
                 const business_field = getChoicesValues(businessFieldChoices);
+                const hometown = getChoiceValue(hometownChoices);
 
                 // Kiểm tra các trường bắt buộc
                 if (!fullname || !email || !phone || !company_name || !company_address) {
@@ -861,7 +913,6 @@
                 const gender = getSelectedRadioValue('gender') || "Nam";
 
                 // Format date correctly if exists
-                // Replace these lines in the handleFormSubmit function
                 let formattedBirthday = birthday ? formatDateToDDMMYYYY(birthday) : '';
                 let formattedCompanyFoundingDate = company_founding_date ? formatDateToDDMMYYYY(company_founding_date) : '';
 
@@ -954,6 +1005,7 @@
                     // Reset Choices.js selections
                     if (industryGroupChoices) industryGroupChoices.removeActiveItems();
                     if (businessFieldChoices) businessFieldChoices.removeActiveItems();
+                    if (hometownChoices) hometownChoices.setChoiceByValue('');
                 } catch (apiError) {
                     console.error("API Error:", apiError);
                     throw new Error(`Lỗi gửi dữ liệu: ${apiError.message || 'Không có phản hồi từ server'}`);
@@ -977,9 +1029,6 @@
 
             // Initialize Choices.js
             initChoices();
-
-            // Populate province dropdown
-            populateProvinceDropdown();
         });
     </script>
 </body>
