@@ -57,7 +57,7 @@
         }
 
         .header h1 {
-            margin: 5px ;
+            margin: 5px;
             font-weight: 700;
             color: #107407;
             font-size: 1.5em;
@@ -266,12 +266,23 @@
             const content = document.querySelector('.content');
             html2canvas(content, {
                 useCORS: true,
+                scale: 2, // Tăng độ phân giải lên
+                allowTaint: true, // Cho phép render các phần tử không an toàn
+                backgroundColor: null, // Giữ nguyên nền
+                logging: true, // Ghi lại lỗi để debug
                 onclone: (clonedDoc) => {
                     const images = clonedDoc.querySelectorAll('img');
                     images.forEach(img => img.src = img.src);
+
+                    // Đảm bảo các style được áp dụng đầy đủ
+                    const watermark = clonedDoc.querySelector('.watermark');
+                    if (watermark) {
+                        watermark.style.opacity = '0.03'; // Đảm bảo opacity được áp dụng
+                    }
                 }
             }).then(canvas => {
-                const dataUrl = canvas.toDataURL('image/png');
+                // Tăng chất lượng ảnh output
+                const dataUrl = canvas.toDataURL('image/png', 1.0);
                 const link = document.createElement('a');
                 link.href = dataUrl;
                 link.download = 'chao-mung-hoi-vien.png';
