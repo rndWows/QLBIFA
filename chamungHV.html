@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,13 @@
             background-color: #f8f9fa;
             color: #343a40;
         }
-        
+
         .email-container {
             width: 100%;
             padding: 30px 0;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
-        
+
         .content {
             width: 90%;
             max-width: 680px;
@@ -34,13 +35,13 @@
             overflow: hidden;
             position: relative;
         }
-        
+
         .top-banner {
-            background: linear-gradient(135deg, #8e1c1c 0%, #b22222 100%);
+            background: linear-gradient(135deg, #5fa159 0%, #107407 100%);
             height: 12px;
             width: 100%;
         }
-        
+
         .header {
             text-align: center;
             padding: 30px 40px 10px;
@@ -48,36 +49,36 @@
             z-index: 1;
             border-bottom: 1px solid #f1f1f1;
         }
-        
+
         .header img {
             width: 120px;
             height: auto;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
-        
+
         .header h1 {
-            margin: 15px 0 5px;
+            margin: 5px ;
             font-weight: 700;
-            color: #8e1c1c;
+            color: #107407;
             font-size: 1.5em;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
-        
+
         .header h2 {
             margin: 5px 0 15px;
             font-weight: 600;
-            color: #8e1c1c;
+            color: #e47926;
             font-size: 1.3em;
             text-transform: uppercase;
         }
-        
+
         .main-content {
             padding: 30px 40px;
             position: relative;
             z-index: 1;
         }
-        
+
         .watermark {
             position: absolute;
             top: 0;
@@ -89,37 +90,37 @@
             opacity: 0.03;
             z-index: 0;
         }
-        
+
         .info-container {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 30px;
         }
-        
+
         .info-text {
             flex: 1;
             margin-right: 30px;
         }
-        
+
         .info-text p {
             line-height: 1.8;
             margin: 8px 0;
             font-size: 15px;
             color: #495057;
         }
-        
+
         .info-text b {
             color: #212529;
             font-weight: 600;
         }
-        
+
         .info-text .member-name {
             font-size: 18px;
             font-weight: 700;
             color: #212529;
         }
-        
+
         .photo-container {
             width: 180px;
             height: 220px;
@@ -129,58 +130,57 @@
             border: 3px solid #fff;
             outline: 1px solid #e9ecef;
         }
-        
+
         #logo {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .additional-info {
             margin-bottom: 30px;
         }
-        
+
         .additional-info p {
             line-height: 1.8;
             margin: 10px 0;
             color: #495057;
             font-size: 15px;
         }
-        
+
         .membership-status {
             background-color: #f8f9fa;
-            border-left: 4px solid #8e1c1c;
+            border-left: 4px solid #e47926;
             padding: 15px 20px;
             margin: 20px 0;
             border-radius: 0 8px 8px 0;
         }
-        
+
         .membership-status p {
             margin: 5px 0;
             color: #495057;
         }
-        
+
         .membership-status b {
-            color: #8e1c1c;
+            color: #107407;
         }
-        
+
         .congratulation {
             text-align: center;
-            margin: 30px 0;
             font-size: 16px;
             color: #495057;
             font-style: italic;
         }
-        
+
         .congratulation .highlight {
             display: inline-block;
             margin-top: 5px;
             font-weight: 600;
             font-size: 17px;
-            color: #8e1c1c;
+            color: #107407;
             font-style: normal;
         }
-        
+
         .footer {
             text-align: center;
             background-color: #f8f9fa;
@@ -189,50 +189,71 @@
             color: #6c757d;
             border-top: 1px solid #f1f1f1;
         }
-        
+
         .footer p {
             margin: 4px 0;
         }
-        
+
         .contact-info {
             display: flex;
             justify-content: center;
             margin-top: 10px;
         }
-        
+
         .contact-item {
             margin: 0 15px;
             display: flex;
             align-items: center;
         }
-        
+
         .contact-item i {
             margin-right: 6px;
             color: #8e1c1c;
         }
-        
+
+        /* Style mới cho nút download */
+        .download-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: #e47926;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-button:hover {
+            background-color: #107407;
+        }
+
         @media (max-width: 768px) {
             .info-container {
                 flex-direction: column;
             }
-            
+
             .info-text {
                 margin-right: 0;
                 margin-bottom: 20px;
                 order: 2;
             }
-            
+
             .photo-container {
                 width: 160px;
                 height: 200px;
                 margin: 0 auto 20px;
                 order: 1;
             }
-            
+
             .main-content {
                 padding: 20px;
             }
-            
+
             .header {
                 padding: 20px 20px 10px;
             }
@@ -277,7 +298,7 @@
             var data = getUrlParameter('data') || 'Chưa cập nhật';
             var nganhnghe = getUrlParameter('nganhnghe') || 'Chưa cập nhật';
             var linkAnh = getUrlParameter('linkAnh');
-             
+
             document.getElementById('name').textContent = name;
             document.getElementById('ngaysinh').textContent = ngaysinh;
             document.getElementById('que').textContent = que;
@@ -290,7 +311,7 @@
             var encodedLinkAnh = encodeURIComponent(linkAnh);
             var imageUrl = decodeURIComponent(encodedLinkAnh);
             document.getElementById('logo').src = imageUrl;
-            
+
             // Thêm mã QR nếu có
             var qrCode = getUrlParameter('qrcode');
             if (qrCode) {
@@ -300,7 +321,12 @@
         });
     </script>
 </head>
+
 <body>
+    <!-- Thêm nút download ngay đầu body -->
+    <button onclick="captureContent()" class="download-button">
+        Tải xuống
+    </button>
     <div class="email-container">
         <div class="content">
             <div class="top-banner"></div>
@@ -315,7 +341,7 @@
                     <div class="info-text">
                         <p>Hội viên: <span class="member-name" id="name"></span></p>
                         <p>Ngày sinh: <b><span id="ngaysinh"></span></b></p>
-                        <p>Địa chỉ: <b><span id="que"></span></b></p>
+                        <p>Nguyên quán: <b><span id="que"></span></b></p>
                         <p>Số điện thoại: <b><span id="sdt"></span></b></p>
                         <p>Chức vụ: <b><span id="chucvu"></span></b></p>
                         <p>Đơn vị: <b><span id="congtys"></span></b></p>
@@ -327,7 +353,8 @@
                 <div class="additional-info">
                     <p>Nhóm ngành nghề: <b><span id="nganhnghe"></span></b></p>
                     <div class="membership-status">
-                        <p><i class="fas fa-certificate"></i> Đã trở thành Hội Viên chính thức của <b>HIỆP HỘI CHẾ BIẾN GỖ TỈNH BÌNH DƯƠNG</b> từ ngày: <b><span id="data"></span></b></p>
+                        <p><i class="fas fa-certificate"></i> Đã trở thành Hội Viên chính thức của <b>HIỆP HỘI CHẾ BIẾN
+                                GỖ TỈNH BÌNH DƯƠNG</b> từ ngày: <b><span id="data"></span></b></p>
                     </div>
                 </div>
                 <div class="congratulation">
@@ -354,10 +381,6 @@
             </div>
         </div>
     </div>
-    <div style="text-align: center; margin: 20px 0;">
-        <button onclick="captureContent()" style="background-color: #8e1c1c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 500;">
-            Tải xuống thẻ hội viên
-        </button>
-    </div>
 </body>
+
 </html>
