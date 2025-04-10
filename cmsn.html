@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Chúc Mừng Sinh Nhật BIFA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Dancing+Script:wght@700&family=Playfair+Display:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #004d00, #008800);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .confetti,
+        .particle {
+            /* Thêm thuộc tính này để các phần tử animation không ảnh hưởng đến layout */
+            position: fixed;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 1000px;
+            background: linear-gradient(to right, #005500, #009900);
+            border-radius: 25px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .card::before,
+        .card::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 183, 77, 0.3);
+            z-index: 5;
+        }
+
+        .card::before {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .card::after {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .left-side {
+            width: 40%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #005500, #007700);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://rndwows.github.io/QLBIFA/pattern.png');
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .right-side {
+            width: 60%;
+            padding: 40px;
+            color: white;
+            position: relative;
+        }
+
+        .photo-container {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3),
+                0 0 0 10px rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+
+        .photo-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4),
+                0 0 0 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+
+        .photo-container:hover img {
+            transform: scale(1.12);
+            filter: brightness(1.1);
+        }
+
+        .birthday-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 2;
+            animation: breathe 5s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .org-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 1.4;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ffb74d;
+            margin: 15px auto 25px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: block;
+            text-align: center;
+            width: fit-content;
+            letter-spacing: 1px;
+        }
+
+        .name::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #ffb74d, transparent);
+        }
+
+        .message-container {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-container::before {
+            content: '"';
+            font-family: 'Dancing Script', cursive;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 60px;
+            opacity: 0.1;
+            color: #ffb74d;
+        }
+
+        .message {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: white;
+            text-align: center;
+        }
+
+        .message p {
+            margin-bottom: 12px;
+        }
+
+        .highlight {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffb74d;
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px rgba(255, 183, 77, 0.5);
+            }
+
+            100% {
+                text-shadow: 0 0 20px rgba(255, 183, 77, 0.8), 0 0 30px rgba(255, 183, 77, 0.4);
+            }
+        }
+
+        .text-accent {
+            color: #ffb74d;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 25px;
+            font-weight: 500;
+            color: white;
+            font-style: italic;
+            position: relative;
+            padding-right: 15px;
+        }
+
+        .signature::after {
+            content: '♥';
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: #ffb74d;
+        }
+
+        .sparkle {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
+            animation: twinkle 5s infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.9;
+                transform: scale(1.5);
+            }
+        }
+
+        .download-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(145deg, #ffb74d, #ff9800);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .download-button::before {
+            content: '↓';
+            font-size: 18px;
+        }
+
+        .download-button:hover {
+            background: linear-gradient(145deg, #ff9800, #ff8f00);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffb74d;
+            opacity: 0.7;
+            animation: confetti-fall linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+
+            50% {
+                transform: translateY(-40px) translateX(-10px);
+            }
+
+            75% {
+                transform: translateY(-20px) translateX(-20px);
+            }
+        }
+
+        /* Ribbon decorations */
+        .ribbon {
+            position: absolute;
+            width: 150px;
+            height: 30px;
+            background: rgba(255, 183, 77, 0.7);
+            transform: rotate(-45deg);
+            top: 30px;
+            left: -40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 5;
+        }
+
+        .ribbon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            animation: shine 3s infinite linear;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: -150px 0;
+            }
+
+            100% {
+                background-position: 150px 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                flex-direction: column;
+            }
+
+            .left-side,
+            .right-side {
+                width: 100%;
+                padding: 30px;
+            }
+
+            .photo-container {
+                width: 180px;
+                height: 180px;
+            }
+
+            .birthday-title {
+                font-size: 2.5rem;
+            }
+
+            .name {
+                font-size: 2rem;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .download-button {
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .ribbon {
+                width: 120px;
+                height: 25px;
+                top: 20px;
+                left: -30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="captureContent()" class="download-button">Tải xuống</button>
+
+    <div class="card">
+        <!-- Decorative ribbon -->
+        <div class="ribbon"></div>
+
+        <!-- Sparkles -->
+        <div class="sparkle" style="top: 10%; left: 20%; width: 4px; height: 4px;"></div>
+        <div class="sparkle" style="top: 15%; left: 80%; width: 5px; height: 5px;"></div>
+        <div class="sparkle" style="top: 30%; left: 65%; width: 3px; height: 3px;"></div>
+        <div class="sparkle" style="top: 50%; left: 90%; width: 6px; height: 6px;"></div>
+        <div class="sparkle" style="top: 60%; left: 30%; width: 4px; height: 4px;"></div>
+        <div class="sparkle" style="top: 75%; left: 70%; width: 5px; height: 5px;"></div>
+        <div class="sparkle" style="top: 85%; left: 15%; width: 3px; height: 3px;"></div>
+
+        <div class="left-side">
+            <div class="photo-container">
+                <img id="person-image" src="https://via.placeholder.com/300x300/107407/ffffff?text=Ảnh"
+                    alt="Ảnh sinh nhật">
+            </div>
+            <h1 class="birthday-title">Happy Birthday</h1>
+        </div>
+
+        <div class="right-side">
+            <div class="header">
+                <img class="logo" src="https://rndwows.github.io/QLBIFA/logo-bifa.png" alt="Logo BIFA">
+                <div class="org-title">HIỆP HỘI CHẾ BIẾN GỖ TỈNH BÌNH DƯƠNG</div>
+            </div>
+
+            <h2 class="name" id="name"></h2>
+
+            <div class="message-container">
+                <div class="message">
+                    <p>Chúc mừng sinh nhật bạn!</p>
+                    <p>Hội mong rằng, là hội viên và việc đồng hành cùng Hội của bạn sẽ là <span
+                            class="text-accent">Động Lực</span> để bạn <span class="text-accent">YÊU THÍCH TUỔI
+                            MỚI</span>.</p>
+                    <span class="highlight">Chúc bạn sinh nhật vui vẻ!</span>
+                    <p>Mỗi năm trôi qua là mỗi năm bạn trở nên tuyệt vời hơn. Chúc bạn có một hành trình phía trước đầy
+                        may mắn và thành công!</p>
+                </div>
+            </div>
+
+            <div class="signature">Thường trực Hội</div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        function captureContent() {
+            const content = document.querySelector('.card');
+            html2canvas(content, {
+                scale: 2,
+                allowTaint: true,
+                backgroundColor: null,
+                logging: true,
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const images = clonedDoc.querySelectorAll('img');
+                    images.forEach(img => img.src = img.src);
+                }
+            }).then(canvas => {
+                const dataUrl = canvas.toDataURL('image/png', 1.0);
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = 'thiep-sinh-nhat-bifa.png';
+                link.click();
+            }).catch(err => {
+                console.error('Error capturing content:', err);
+            });
+        }
+
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = `${Math.random() * 10 + 5}px`;
+                confetti.style.backgroundColor = `hsl(${Math.random() * 60 + 30}, 100%, 60%)`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(confetti);
+            }
+        }
+
+        function createFloatingParticles() {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.width = `${Math.random() * 6 + 2}px`;
+                particle.style.height = particle.style.width;
+                particle.style.opacity = `${Math.random() * 0.5 + 0.3}`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                document.body.appendChild(particle);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var name = getUrlParameter('name') || 'Nguyễn Tấn Phát';
+            var linkAnh = getUrlParameter('linkAnh');
+
+            document.getElementById('name').textContent = name;
+
+            if (linkAnh) {
+                var encodedLinkAnh = encodeURIComponent(linkAnh);
+                var imageUrl = decodeURIComponent(encodedLinkAnh);
+                document.getElementById('person-image').src = imageUrl;
+            }
+
+            // Thêm thêm nhiều sparkle ngẫu nhiên với kích thước khác nhau
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.width = `${Math.random() * 4 + 2}px`;
+                sparkle.style.height = `${Math.random() * 4 + 2}px`;
+                sparkle.style.animationDelay = `${Math.random() * 5}s`;
+                sparkle.style.animationDuration = `${Math.random() * 4 + 3}s`;
+                document.querySelector('.card').appendChild(sparkle);
+            }
+
+            // Tạo hiệu ứng confetti
+            createConfetti();
+
+            // Tạo hiệu ứng các hạt nổi
+            createFloatingParticles();
+        });
+    </script>
+</body>
+
+</html>
