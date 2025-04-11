@@ -44,6 +44,8 @@
             width: 80px;
             height: auto;
             margin-right: 20px;
+            object-fit: contain;
+            /* Thay đổi từ cover sang contain */
         }
 
         .header-text h1 {
@@ -93,7 +95,8 @@
             object-fit: cover;
         }
 
-        .member-info h3, .company-info h3 {
+        .member-info h3,
+        .company-info h3 {
             font-size: 16px;
             color: #107407;
             margin: 20px 0 10px;
@@ -117,6 +120,7 @@
             color: #212529;
         }
 
+        /* Chỉnh sửa cho company logo */
         .company-logo {
             width: 100px;
             height: 100px;
@@ -125,12 +129,17 @@
             margin-bottom: 20px;
             border: 2px solid #e9ecef;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
         }
 
         .company-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            /* Thay đổi từ cover sang contain */
         }
 
         .membership-date {
@@ -203,6 +212,57 @@
             z-index: 0;
             pointer-events: none;
         }
+
+        @media print {
+            .print-btn {
+                display: none;
+            }
+
+            body {
+                background-color: white;
+            }
+
+            .profile-container {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+
+        @media print {
+            .profile-container {
+                page-break-inside: avoid;
+                page-break-after: avoid;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+                box-shadow: none;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+            }
+
+            .footer {
+                position: relative;
+                margin-top: auto;
+            }
+
+            .profile-content {
+                display: flex;
+                flex-direction: row;
+                padding: 15px;
+            }
+
+            /* Đảm bảo chiều cao của container không vượt quá giới hạn của trang */
+            html,
+            body,
+            .profile-container {
+                height: auto !important;
+                overflow: visible !important;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script>
@@ -214,6 +274,9 @@
         }
 
         function captureContent() {
+            // Lấy tên hội viên từ phần tử HTML
+            const memberName = document.getElementById('name').textContent || 'ho-so-hoi-vien';
+
             html2canvas(document.querySelector('.profile-container'), {
                 useCORS: true,
                 scale: 2,
@@ -228,7 +291,8 @@
                 const dataUrl = canvas.toDataURL('image/png', 1.0);
                 const link = document.createElement('a');
                 link.href = dataUrl;
-                link.download = 'ho-so-hoi-vien.png';
+                // Thêm tên người dùng vào tên file
+                link.download = 'ho-so-hoi-vien-' + memberName.trim().replace(/\s+/g, '-') + '.png';
                 link.click();
             }).catch(err => {
                 console.error('Error capturing content:', err);
@@ -242,7 +306,7 @@
             var ngaysinh = getUrlParameter('ngaysinh') || 'Chưa cập nhật';
             var que = getUrlParameter('que') || 'Chưa cập nhật';
             var sdt = getUrlParameter('sdt') || 'Chưa cập nhật';
-            
+
             // Lấy thông tin công ty từ URL
             var congtys = getUrlParameter('congtys') || 'Chưa cập nhật';
             var chucvu = getUrlParameter('chucvu') || 'Chưa cập nhật';
@@ -251,7 +315,7 @@
             var nhomnganhnghe = getUrlParameter('nhomnganhnghe') || 'Chưa cập nhật';
             var nganhnghe = getUrlParameter('nganhnghe') || 'Chưa cập nhật';
             var data = getUrlParameter('data') || 'Chưa cập nhật';
-            
+
             // Lấy hình ảnh từ URL
             var linkAnh = getUrlParameter('linkAnh');
             var companyLogo = getUrlParameter('companyLogo');
@@ -261,7 +325,7 @@
             document.getElementById('email').textContent = email;
             document.getElementById('sdt').textContent = sdt;
             document.getElementById('que').textContent = que;
-            
+
             // Cập nhật thông tin công ty
             document.getElementById('congtys').textContent = congtys;
             document.getElementById('chucvu').textContent = chucvu;
@@ -270,16 +334,16 @@
             document.getElementById('nhomnganhnghe').textContent = nhomnganhnghe;
             document.getElementById('nganhnghe').textContent = nganhnghe;
             document.getElementById('data').textContent = data;
-            
+
             // Cập nhật hình ảnh
             if (linkAnh) {
                 document.getElementById('memberPhoto').src = decodeURIComponent(linkAnh);
             }
-            
+
             if (companyLogo) {
                 document.getElementById('companyLogo').src = decodeURIComponent(companyLogo);
             }
-            
+
             // Cập nhật tiêu đề trang
             document.title = 'Hồ sơ Hội viên - ' + name;
         });
@@ -288,6 +352,10 @@
 </head>
 
 <body>
+    <!-- Thêm nút in bên cạnh nút tải xuống hiện tại -->
+    <button onclick="window.print()" class="print-btn" style="right: 150px;">
+        <i class="fas fa-print"></i> In
+    </button>
     <button onclick="captureContent()" class="print-btn">
         <i class="fas fa-download"></i> Tải xuống
     </button>
@@ -312,7 +380,7 @@
                 <div class="member-info">
                     <h3>THÔNG TIN HỘI VIÊN</h3>
                     <div class="info-item">
-                        <div class="info-label">Họ và tên:</div>
+                        <div class="info-label">Hội viên:</div>
                         <div id="name" class="info-value">Chưa cập nhật</div>
                     </div>
                     <div class="info-item">
@@ -338,7 +406,7 @@
 
                     <h3>THÔNG TIN CÔNG TY</h3>
                     <div class="info-item">
-                        <div class="info-label">Tên công ty:</div>
+                        <div class="info-label">Công ty:</div>
                         <div id="congtys" class="info-value">Chưa cập nhật</div>
                     </div>
                     <div class="info-item">
@@ -358,7 +426,7 @@
                         <div id="nhomnganhnghe" class="info-value">Chưa cập nhật</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Ngành nghề KD:</div>
+                        <div class="info-label">Ngành nghề kinh doanh:</div>
                         <div id="nganhnghe" class="info-value">Chưa cập nhật</div>
                     </div>
 
@@ -370,7 +438,8 @@
         </div>
 
         <div class="footer">
-            <p>Văn phòng hội: Số 31, đường Hoàng Hoa Thám, khu phố 8, phường Hiệp Thành, TP TDM, tỉnh Bình Dương | ĐT: 0274.3616.256 | Email: info@bifa.vn</p>
+            <p>Văn phòng hội: Số 31, đường Hoàng Hoa Thám, khu phố 8, phường Hiệp Thành, TP TDM, tỉnh Bình Dương | ĐT:
+                0274.3616.256 | Email: info@bifa.vn</p>
         </div>
     </div>
 </body>
