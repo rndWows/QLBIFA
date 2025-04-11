@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ Hội viên</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .top-banner {
+            background: linear-gradient(135deg, #5fa159 0%, #107407 100%);
+            height: 12px;
+            width: 100%;
+        }
+
+        .header {
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header .logo {
+            width: 80px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #107407;
+        }
+
+        .header-text h2 {
+            margin: 5px 0 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #e47926;
+        }
+
+        .profile-content {
+            display: flex;
+            padding: 30px;
+            position: relative;
+        }
+
+        .profile-left {
+            flex: 1;
+            padding-right: 30px;
+        }
+
+        .profile-right {
+            flex: 2;
+            border-left: 1px solid #eee;
+            padding-left: 30px;
+        }
+
+        .profile-photo {
+            width: 180px;
+            height: 210px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 3px solid white;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .member-info h3, .company-info h3 {
+            font-size: 16px;
+            color: #107407;
+            margin: 20px 0 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .info-item {
+            margin: 10px 0;
+            display: flex;
+        }
+
+        .info-label {
+            width: 130px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .info-value {
+            flex: 1;
+            color: #212529;
+        }
+
+        .company-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .membership-date {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #e47926;
+            font-size: 14px;
+        }
+
+        .membership-date span {
+            font-weight: 600;
+            color: #107407;
+        }
+
+        .footer {
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 15px;
+            font-size: 13px;
+            color: #6c757d;
+            border-top: 1px solid #eee;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #e47926;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-btn:hover {
+            background-color: #107407;
+        }
+
+        @media (max-width: 768px) {
+            .profile-content {
+                flex-direction: column;
+            }
+
+            .profile-left {
+                padding-right: 0;
+                padding-bottom: 20px;
+            }
+
+            .profile-right {
+                border-left: none;
+                border-top: 1px solid #eee;
+                padding-left: 0;
+                padding-top: 20px;
+            }
+        }
+
+        .watermark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://rndwows.github.io/QLBIFA/logo-bifa.png') no-repeat center center;
+            background-size: 70%;
+            opacity: 0.03;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script>
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        function captureContent() {
+            html2canvas(document.querySelector('.profile-container'), {
+                useCORS: true,
+                scale: 2,
+                allowTaint: true,
+                backgroundColor: null,
+                logging: true,
+                onclone: (clonedDoc) => {
+                    const images = clonedDoc.querySelectorAll('img');
+                    images.forEach(img => img.src = img.src);
+                }
+            }).then(canvas => {
+                const dataUrl = canvas.toDataURL('image/png', 1.0);
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = 'ho-so-hoi-vien.png';
+                link.click();
+            }).catch(err => {
+                console.error('Error capturing content:', err);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Lấy thông tin hội viên từ URL
+            var name = getUrlParameter('name') || 'Chưa cập nhật';
+            var email = getUrlParameter('email') || 'Chưa cập nhật';
+            var ngaysinh = getUrlParameter('ngaysinh') || 'Chưa cập nhật';
+            var que = getUrlParameter('que') || 'Chưa cập nhật';
+            var sdt = getUrlParameter('sdt') || 'Chưa cập nhật';
+            
+            // Lấy thông tin công ty từ URL
+            var congtys = getUrlParameter('congtys') || 'Chưa cập nhật';
+            var chucvu = getUrlParameter('chucvu') || 'Chưa cập nhật';
+            var diachicty = getUrlParameter('diachicty') || 'Chưa cập nhật';
+            var ngaythanhlap = getUrlParameter('ngaythanhlap') || 'Chưa cập nhật';
+            var nhomnganhnghe = getUrlParameter('nhomnganhnghe') || 'Chưa cập nhật';
+            var nganhnghe = getUrlParameter('nganhnghe') || 'Chưa cập nhật';
+            var data = getUrlParameter('data') || 'Chưa cập nhật';
+            
+            // Lấy hình ảnh từ URL
+            var linkAnh = getUrlParameter('linkAnh');
+            var companyLogo = getUrlParameter('companyLogo');
+
+            // Cập nhật thông tin hội viên
+            document.getElementById('name').textContent = name;
+            document.getElementById('email').textContent = email;
+            document.getElementById('sdt').textContent = sdt;
+            document.getElementById('que').textContent = que;
+            
+            // Cập nhật thông tin công ty
+            document.getElementById('congtys').textContent = congtys;
+            document.getElementById('chucvu').textContent = chucvu;
+            document.getElementById('diachicty').textContent = diachicty;
+            document.getElementById('ngaythanhlap').textContent = ngaythanhlap;
+            document.getElementById('nhomnganhnghe').textContent = nhomnganhnghe;
+            document.getElementById('nganhnghe').textContent = nganhnghe;
+            document.getElementById('data').textContent = data;
+            
+            // Cập nhật hình ảnh
+            if (linkAnh) {
+                document.getElementById('memberPhoto').src = decodeURIComponent(linkAnh);
+            }
+            
+            if (companyLogo) {
+                document.getElementById('companyLogo').src = decodeURIComponent(companyLogo);
+            }
+            
+            // Cập nhật tiêu đề trang
+            document.title = 'Hồ sơ Hội viên - ' + name;
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <button onclick="captureContent()" class="print-btn">
+        <i class="fas fa-download"></i> Tải xuống
+    </button>
+
+    <div class="profile-container">
+        <div class="top-banner"></div>
+        <div class="header">
+            <img class="logo" src="https://rndwows.github.io/QLBIFA/logo-bifa.png" alt="Logo BIFA">
+            <div class="header-text">
+                <h1>HIỆP HỘI CHẾ BIẾN GỖ TỈNH BÌNH DƯƠNG</h1>
+                <h2>HỒ SƠ HỘI VIÊN</h2>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="watermark"></div>
+            <div class="profile-left">
+                <div class="profile-photo">
+                    <img id="memberPhoto" src="https://via.placeholder.com/180x210" alt="Ảnh hội viên">
+                </div>
+
+                <div class="member-info">
+                    <h3>THÔNG TIN HỘI VIÊN</h3>
+                    <div class="info-item">
+                        <div class="info-label">Họ và tên:</div>
+                        <div id="name" class="info-value">Chưa cập nhật</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email:</div>
+                        <div id="email" class="info-value">Chưa cập nhật</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Số điện thoại:</div>
+                        <div id="sdt" class="info-value">Chưa cập nhật</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Nguyên quán:</div>
+                        <div id="que" class="info-value">Chưa cập nhật</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-right">
+                <div class="company-info">
+                    <div class="company-logo">
+                        <img id="companyLogo" src="https://via.placeholder.com/100" alt="Logo công ty">
+                    </div>
+
+                    <h3>THÔNG TIN CÔNG TY</h3>
+                    <div class="info-item">
+                        <div class="info-label">Tên công ty:</div>
+                        <div id="congtys" class="info-value">Chưa cập nhật</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Chức vụ:</div>
+                        <div id="chucvu" class="info-value">Chưa cập nhật</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Địa chỉ:</div>
+                        <div id="diachicty" class="info-value">Chưa cập nhật</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Ngày thành lập:</div>
+                        <div id="ngaythanhlap" class="info-value">Chưa cập nhật</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Nhóm ngành nghề:</div>
+                        <div id="nhomnganhnghe" class="info-value">Chưa cập nhật</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Ngành nghề KD:</div>
+                        <div id="nganhnghe" class="info-value">Chưa cập nhật</div>
+                    </div>
+
+                    <div class="membership-date">
+                        <i class="fas fa-calendar-check"></i> Ngày tham gia hội: <span id="data">Chưa cập nhật</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Văn phòng hội: Số 31, đường Hoàng Hoa Thám, khu phố 8, phường Hiệp Thành, TP TDM, tỉnh Bình Dương | ĐT: 0274.3616.256 | Email: info@bifa.vn</p>
+        </div>
+    </div>
+</body>
+
+</html>
