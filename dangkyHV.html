@@ -130,8 +130,7 @@
     <!-- Header Section -->
     <div class="header-bg py-8">
         <div class="container mx-auto px-4 text-center fade-in">
-            <img src="https://bifa.wows.vn/logo.png"
-                alt="Wood Association Logo" class="logo mx-auto mb-4">
+            <img src="https://bifa.wows.vn/logo.png" alt="Wood Association Logo" class="logo mx-auto mb-4">
             <h1 class="text-4xl font-extrabold text-white">Đăng Ký Thành Viên</h1>
             <p class="text-lg text-white mt-4">Tham gia hiệp hội gỗ danh giá của chúng tôi ngay hôm nay!</p>
         </div>
@@ -139,8 +138,7 @@
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-8 fade-in">
-        <div
-            class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg hover-card transition-transform duration-300">
+        <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg hover-card transition-transform duration-300">
             <!-- Form -->
             <form id="memberForm" class="p-6 md:p-8 space-y-8">
                 <!-- Thông Tin Cá Nhân -->
@@ -232,9 +230,11 @@
                         <div>
                             <label for="referrer" class="block text-sm font-medium text-gray-700">Người Giới
                                 Thiệu</label>
-                            <input type="text" id="referrer" name="referrer"
-                                class="mt-2 w-full border gradient-border rounded-lg p-3 focus:ring-green-500 focus:border-green-500"
-                                placeholder="Nhập tên người giới thiệu">
+                            <select id="referrer" name="referrer"
+                                class="mt-2 w-full border gradient-border rounded-lg p-3 focus:ring-green-500 focus:border-green-500">
+                                <option value="" selected disabled>Chọn người giới thiệu</option>
+                                <!-- Options sẽ được thêm vào động từ API -->
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -352,6 +352,8 @@
         let industryGroupChoices;
         let businessFieldChoices;
         let hometownChoices;
+        // Thêm vào phần script
+        let referrerChoices;
 
         // API request function using Fetch API instead of jQuery Ajax
         async function apiRequest(tableName, action, data) {
@@ -490,6 +492,119 @@
                     noChoices: 'has-no-choices'
                 }
             });
+        }
+
+        // Hàm để lấy danh sách hội viên
+        // Hàm để lấy danh sách hội viên từ bảng HOIVIEN
+        async function fetchMembers() {
+            try {
+                const response = await fetch(`https://${region}.appsheet.com/api/v2/apps/${appId}/tables/HOIVIEN/Action`, {
+                    method: 'POST',
+                    headers: {
+                        'ApplicationAccessKey': accessKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        Action: 'Find',
+                        Properties: {},
+                        Selector: "Filter(HOIVIEN, true)"
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Xử lý dữ liệu trả về
+                if (data && Array.isArray(data.Rows)) {
+                    return data.Rows
+                        .filter(row => row["Họ và Tên"] || row["Họ và tên"])
+                        .map(row => {
+                            return {
+                                name: row["Họ và Tên"] || row["Họ và tên"] || ""
+                            };
+                        });
+                } else if (Array.isArray(data)) {
+                    // Trường hợp data trả về là mảng trực tiếp
+                    return data
+                        .filter(row => row["Họ và Tên"] || row["Họ và tên"])
+                        .map(row => {
+                            return {
+                                name: row["Họ và Tên"] || row["Họ và tên"] || ""
+                            };
+                        });
+                }
+
+                return [];
+            } catch (error) {
+                console.error("Error fetching members:", error);
+                return [];
+            }
+        }
+
+        // Hàm khởi tạo dropdown người giới thiệu
+        async function initReferrerChoices() {
+            try {
+                const members = await fetchMembers();
+                const referrerSelect = document.getElementById('referrer');
+
+                // Xóa tất cả options hiện tại ngoại trừ option mặc định
+                while (referrerSelect.options.length > 1) {
+                    referrerSelect.remove(1);
+                }
+
+                // Thêm hội viên vào dropdown
+                members.forEach(member => {
+                    if (member.name) {
+                        const option = document.createElement('option');
+                        option.value = member.name;
+                        option.textContent = member.name;
+                        referrerSelect.appendChild(option);
+                    }
+                });
+
+                // Khởi tạo Choices.js cho dropdown
+                referrerChoices = new Choices('#referrer', {
+                    searchEnabled: true,
+                    searchPlaceholderValue: 'Tìm kiếm hội viên...',
+                    itemSelectText: 'Nhấn để chọn',
+                    noResultsText: 'Không tìm thấy kết quả phù hợp',
+                    shouldSort: false,
+                    classNames: {
+                        containerOuter: 'choices',
+                        containerInner: 'choices__inner',
+                        input: 'choices__input',
+                        inputCloned: 'choices__input--cloned',
+                        list: 'choices__list',
+                        listItems: 'choices__list--multiple',
+                        listSingle: 'choices__list--single',
+                        listDropdown: 'choices__list--dropdown',
+                        item: 'choices__item',
+                        itemSelectable: 'choices__item--selectable',
+                        itemDisabled: 'choices__item--disabled',
+                        itemChoice: 'choices__item--choice',
+                        placeholder: 'choices__placeholder',
+                        group: 'choices__group',
+                        groupHeading: 'choices__heading',
+                        button: 'choices__button',
+                        activeState: 'is-active',
+                        focusState: 'is-focused',
+                        openState: 'is-open',
+                        disabledState: 'is-disabled',
+                        highlightedState: 'is-highlighted',
+                        selectedState: 'is-selected',
+                        flippedState: 'is-flipped',
+                        loadingState: 'is-loading',
+                        noResults: 'has-no-results',
+                        noChoices: 'has-no-choices'
+                    }
+                });
+            } catch (error) {
+                console.error("Error initializing referrer choices:", error);
+                // Hiển thị thông báo lỗi nếu cần
+            }
         }
 
         // Image to Base64 function
@@ -845,6 +960,8 @@
 
             // Khởi tạo Choices.js cho hometown
             initHometownChoices();
+            // Khởi tạo dropdown người giới thiệu
+            initReferrerChoices();
         }
 
         // Get values from Choices.js selections
@@ -886,7 +1003,7 @@
                 const religion = document.getElementById('religion').value.trim();
                 const education = document.getElementById('education').value;
                 const company_founding_date = document.getElementById('company_founding_date').value;
-                const referrer = document.getElementById('referrer').value.trim();
+                const referrer = getChoiceValue(referrerChoices);
 
                 // Lấy giá trị từ Choices.js
                 const industry_group = getChoicesValues(industryGroupChoices);
